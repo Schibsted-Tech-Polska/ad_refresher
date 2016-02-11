@@ -1,0 +1,29 @@
+{
+  "name": "ad_refresher",
+  "description": "Lazy loading library",
+  "main": "index.js",
+  "authors": [
+    "Stavanger Aftenblad Cracow Team"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "lazy",
+    "loading",
+    "ads"
+  ],
+  "homepage": "https://github.com/aftenbladet/ad_refresher",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "gulpfile.js",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.0",
+    "waypoints": "~4.0.0",
+    "css-element-queries": "~0.3.2"
+  }
+}
