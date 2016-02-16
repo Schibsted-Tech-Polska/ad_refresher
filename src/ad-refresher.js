@@ -14,11 +14,16 @@
 
     /**
      * @param {jQuery} $element
+     * @param {object} options
      */
-    function init($element) {
+    function init($element, options) {
         if (!$element) {
             throw new Error('Element is not defined');
         }
+
+        options = options || {};
+        options.loadingThreshold = options.loadingThreshold || LOADING_AD_POSITION_THRESHOLD;
+        options.reloadingThreshold = options.reloadingThreshold || RELOADING_AD_POSITION_THRESHOLD;
 
         new Waypoint({
             element: $element[0],
@@ -27,7 +32,7 @@
                     $element.trigger('load-ad');
                 }
             },
-            offset: window.innerHeight + LOADING_AD_POSITION_THRESHOLD
+            offset: window.innerHeight + options.loadingThreshold
         });
 
         new Waypoint({
@@ -37,7 +42,7 @@
                     $element.trigger('reload-ad');
                 }
             },
-            offset: -250 - RELOADING_AD_POSITION_THRESHOLD
+            offset: -250 - options.reloadingThreshold
         });
     }
 
