@@ -46,8 +46,15 @@
         });
     }
 
+    function refresh() {
+        setTimeout(function() {
+            Waypoint.refreshAll();
+        }, 0);
+    }
+
     var AdRefresher = {
-        init: init
+        init: init,
+        refresh: refresh
     };
 
     // make available to common module loader
