@@ -1,1 +1,3 @@
-require('ad-refresher');
+if (typeof require !== 'undefined') {
+    require('ad-refresher');
+}
