@@ -11,7 +11,7 @@
     "loading",
     "ads"
   ],
-  "homepage": "https://github.com/aftenbladet/ad_refresher",
+  "homepage": "https://github.com/Schibsted-Tech-Polska/ad_refresher",
   "moduleType": [],
   "ignore": [
     "**/.*",
@@ -22,7 +22,9 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1",
+    "jquery": "~2.1.1"
+  },
+  "devDependencies": {
     "waypoints": "~4.0.0",
     "css-element-queries": "~0.3.2"
   }
