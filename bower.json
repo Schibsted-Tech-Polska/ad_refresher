@@ -22,7 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1 || ~2.2.1"
   },
   "devDependencies": {
     "waypoints": "~4.0.0",
