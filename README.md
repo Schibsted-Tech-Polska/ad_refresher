@@ -8,10 +8,10 @@ Additional event is emitted, when user scrolls up - it allows you to refresh ele
 
 ## Usage
 
-Remember! Dist versions does not contain jQuery, but it is required!
+`$element` should be a DOM Element or a jQuery object.
 
 ```
-  var $element = $(this);
+  var $element = $(this); // or document.getElementById('elementId');
 
   $ad.on('load-ad', function() {
     // your callback for loading element, i.e.
@@ -32,7 +32,6 @@ Remember! Dist versions does not contain jQuery, but it is required!
 git clone https://github.com/aftenbladet/ad_refresher.git
 cd ad_refresher
 npm install
-bower install
 ```
 
 Fill in your changes. And prepare dist:

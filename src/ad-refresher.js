@@ -1,66 +1,59 @@
-(function(jQuery) {
-    var LOADING_AD_POSITION_THRESHOLD = 300;
-    var RELOADING_AD_POSITION_THRESHOLD = 150;
+(function() {
+    function init(element, options) {
+        var LOADING_AD_POSITION_THRESHOLD = 300;
+        var RELOADING_AD_POSITION_THRESHOLD = 150;
+        var lastY = 0;
+        var lastRatio = 0;
 
-    if (typeof(jQuery) === 'undefined') {
-        throw new Error('jQuery is not defined');
-    }
-
-    jQuery(function() {
-        new ResizeSensor(jQuery('body'), function() {
-            Waypoint.refreshAll()
-        });
-    });
-
-    /**
-     * @param {jQuery} $element
-     * @param {object} options
-     */
-    function init($element, options) {
-        if (!$element) {
+        if (!element) {
             throw new Error('Element is not defined');
+        }
+
+        if (element[0] instanceof Element) {
+            element = element[0];
         }
 
         options = options || {};
         options.loadingThreshold = options.loadingThreshold || LOADING_AD_POSITION_THRESHOLD;
         options.reloadingThreshold = options.reloadingThreshold || RELOADING_AD_POSITION_THRESHOLD;
 
-        new Waypoint({
-            element: $element[0],
-            handler: function(direction) {
-                if (direction === 'down') {
-                    $element.trigger('load-ad');
+        var loader = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.intersectionRatio > 0) {
+                    entry.target.dispatchEvent(new Event('load-ad'));
                 }
-            },
-            offset: window.innerHeight + options.loadingThreshold
+            });
+        }, {
+            rootMargin: '0px 0px ' + options.loadingThreshold + 'px 0px'
         });
-
-        new Waypoint({
-            element: $element[0],
-            handler: function(direction) {
-                if (direction === 'up') {
-                    $element.trigger('reload-ad');
+        var reloader = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                var currentY = entry.boundingClientRect.y;
+                var currentRatio = entry.intersectionRatio;
+                if (entry.isIntersecting && currentRatio >= lastRatio && currentY > lastY) {
+                    entry.target.dispatchEvent(new Event('reload-ad'));
                 }
-            },
-            offset: -250 - options.reloadingThreshold
+                lastY = currentY;
+                lastRatio = currentRatio;
+            });
+        }, {
+            rootMargin: options.reloadingThreshold + 'px 0px 00px 0px'
         });
-    }
-
-    function refresh() {
-        setTimeout(function() {
-            Waypoint.refreshAll();
-        }, 0);
+        loader.observe(element);
+        reloader.observe(element);
     }
 
     var AdRefresher = {
         init: init,
-        refresh: refresh
+        refresh: function() {
+            //kept for backwards compatibility
+        }
     };
 
-    // make available to common module loader
+// make available to common module loader
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         module.exports = AdRefresher;
     } else {
         window.AdRefresher = AdRefresher;
     }
-})(jQuery);
+})();

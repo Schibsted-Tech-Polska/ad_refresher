@@ -1,11 +1,9 @@
 var gulp = require('gulp'),
     gulpConcat = require('gulp-concat'),
     sourcemaps = require('gulp-sourcemaps'),
-    uglify = require('gulp-uglify'),
+    uglify = require('gulp-uglify');
 
     jsFiles = [
-        'bower_components/css-element-queries/src/ResizeSensor.js',
-        'bower_components/waypoints/lib/jquery.waypoints.js',
         'src/*.js'
     ];
 
