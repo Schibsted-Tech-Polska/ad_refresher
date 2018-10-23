@@ -50,7 +50,7 @@
         }
     };
 
-// make available to common module loader
+    // make available to common module loader
     if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
         module.exports = AdRefresher;
     } else {
