@@ -16,6 +16,7 @@
         options = options || {};
         options.loadingThreshold = options.loadingThreshold || LOADING_AD_POSITION_THRESHOLD;
         options.reloadingThreshold = options.reloadingThreshold || RELOADING_AD_POSITION_THRESHOLD;
+        options.useReloading = options.useReloading || true;
 
         var loader = new IntersectionObserver(function(entries, observer) {
             entries.forEach(function(entry) {
@@ -27,21 +28,24 @@
         }, {
             rootMargin: '0px 0px ' + options.loadingThreshold + 'px 0px'
         });
-        var reloader = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                var currentY = entry.boundingClientRect.y;
-                var currentRatio = entry.intersectionRatio;
-                if (entry.isIntersecting && currentRatio >= lastRatio && currentY > lastY) {
-                    entry.target.dispatchEvent(new Event('reload-ad'));
-                }
-                lastY = currentY;
-                lastRatio = currentRatio;
-            });
-        }, {
-            rootMargin: options.reloadingThreshold + 'px 0px 00px 0px'
-        });
         loader.observe(element);
-        reloader.observe(element);
+
+        if (options.useReloading) {
+            var reloader = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    var currentY = entry.boundingClientRect.y;
+                    var currentRatio = entry.intersectionRatio;
+                    if (entry.isIntersecting && currentRatio >= lastRatio && currentY > lastY) {
+                        entry.target.dispatchEvent(new Event('reload-ad'));
+                    }
+                    lastY = currentY;
+                    lastRatio = currentRatio;
+                });
+            }, {
+                rootMargin: options.reloadingThreshold + 'px 0px 0px 0px'
+            });
+            reloader.observe(element);
+        }
     }
 
     var AdRefresher = {
