@@ -22,8 +22,16 @@ Additional event is emitted, when user scrolls up - it allows you to refresh ele
     // your callback for reloading element, i.e.
     reloadContent($element);
   });
+  
+  // default options
+  var options = {
+    loadingThreshold: 300,
+    reloadingThreshold: 150,
+    useReloading: true        // if set to false, it will disable reload event
+  }
 
-  AdRefresher.init($element);
+  // second parameter is optional
+  AdRefresher.init($element, options);
 ```
 
 ## Development
