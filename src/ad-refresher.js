@@ -17,10 +17,11 @@
         options.loadingThreshold = options.loadingThreshold || LOADING_AD_POSITION_THRESHOLD;
         options.reloadingThreshold = options.reloadingThreshold || RELOADING_AD_POSITION_THRESHOLD;
 
-        var loader = new IntersectionObserver(function(entries) {
+        var loader = new IntersectionObserver(function(entries, observer) {
             entries.forEach(function(entry) {
                 if (entry.intersectionRatio > 0) {
                     entry.target.dispatchEvent(new Event('load-ad'));
+                    observer.disconnect();
                 }
             });
         }, {
